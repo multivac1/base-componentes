@@ -1,0 +1,8 @@
+.ContenedorPadreUpsells{}
+.ContenedorUpsells{
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    padding: 0;
+}
+.ItemUpsell{}
