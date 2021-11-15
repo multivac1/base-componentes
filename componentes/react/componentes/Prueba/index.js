@@ -2,12 +2,12 @@ import React, { useMemo, Fragment } from 'react';
 import { useProduct } from 'vtex.product-context';
 import styles from './styles.css'
 
-const Prueba = () => {
+const NicoTest = () => {
     
     return useMemo(() =>{
         return (
-            <h2>HOLA, SEAN BIENVENIDOS A MI CANAL DE YOUTUBE</h2>
+            <h2 className={styles.ComponentTitle}>Hola Nico!</h2>
         )
     },[])
 }
-export default Prueba
+export default NicoTest
