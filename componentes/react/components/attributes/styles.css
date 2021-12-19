@@ -1,0 +1,17 @@
+.ContainerProductAttributes {
+    width: 100%;
+}
+.TitleProductAttributes {
+    color: #5c5c5c;
+}
+.ContentProductAttributes {
+    padding: 0;
+}
+.SubtitleProductAttributes,
+.DescriptionProductAttributes {
+    color: #aaaaaa;
+    list-style: none;
+}
+.SubtitleProductAttributes {
+    margin-bottom: .5rem;
+}

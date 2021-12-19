@@ -1,5 +1,8 @@
 {
   "glamit-component-NicoTest":{
     "component": "NicoTest"
+  },
+  "glamit-component-ProductAttributes": {
+    "component": "ProductAttributes"
   }
 }

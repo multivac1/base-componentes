@@ -1,0 +1,13 @@
+.ComponentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ComponentTitle {
+    color: orange;
+}
+
+.ComponentSubtitle {
+    color: black;
+}

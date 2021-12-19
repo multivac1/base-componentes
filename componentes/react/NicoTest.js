@@ -1,3 +1,3 @@
-import NicoTest from './componentes/Prueba/index';
+import NicoTest from './components/nicotest/index';
 
 export default NicoTest;
