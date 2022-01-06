@@ -4,5 +4,8 @@
   },
   "glamit-component-ProductAttributes": {
     "component": "ProductAttributes"
+  },
+  "glamit-component-ProductSize": {
+    "component": "ProductSize"
   }
 }
