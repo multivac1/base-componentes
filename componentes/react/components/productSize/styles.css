@@ -1,3 +1,8 @@
 .TriggerTitle {
-    color: #000;
+    cursor: pointer;
+}
+
+.TriggerTitle .container {
+    color: inherit;
+    font-weight: inherit;
 }

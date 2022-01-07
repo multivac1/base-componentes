@@ -20,7 +20,8 @@
     "vtex.product-summary": "2.x",
     "vtex.search-page-context": "0.x",
     "vtex.modal-layout": "0.x",
-    "vtex.rich-text": "0.x"
+    "vtex.rich-text": "0.x",
+    "vtex.store-image": "0.x"
   },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
