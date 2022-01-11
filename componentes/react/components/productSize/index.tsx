@@ -29,33 +29,27 @@ const OPTIONS: OptionsI = {
 }
 
 const ProductSize = (props: TriggerI) => {
+    let {product} = useContext(ProductContext);
     let { triggerText, triggerColor, triggerWeight, attributeName } = props;
-    const {product} = useContext(ProductContext);
-    // almacena atributo de producto para tabla de talle
     // producto c/atributo para test prendas superiores: https://practicacomponentes--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
     // producto test boys: https://practicacomponentes--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
     // prod s/atributo: https://practicacomponentes--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
     let properties = product?.properties;
-    let filteredAtribute = properties?.filter(property => property?.name == "Tabla de talles").map(item => (
-        item?.values[0]
-    ));
+    let filteredAtribute = properties?.filter(property => property?.name == "Tabla de talles").map(item => (item?.values[0]));
     let tableName = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
-    const arrayName = attributeName?.split(',');
+    let arrayNames = attributeName?.split(',');
 
-    console.log('tableName');
+    console.log('Nombre tablita');
     console.log(tableName);
 
-    console.log('arrayName');
-    console.log(arrayName);
-
-    console.log('resultado');
-    console.log(arrayName.includes(tableName));
+    console.log('Array');
+    console.log(arrayNames);
     
     return useMemo(() => {
         return (
             <>
                 {
-                   arrayName.includes(tableName)  ?
+                   arrayNames.includes(tableName)  ?
                         <EnhancedModalTrigger>
                             <div className={styles.TriggerTitle} style={{color: triggerColor, fontWeight: triggerWeight}}>
                                 <MemoizedRichText text={triggerText} />
