@@ -8,27 +8,47 @@ import Image from 'vtex.store-image/Image';
 import { useRuntime } from 'vtex.render-runtime';
 //import styles from './styles.css';
 
-interface TriggerI {
+interface ITrigger {
     triggerText: string,
     triggerColor: string,
-    triggerWeight: number
+    triggerWeight: number,
+    arrayField: IArrayField[]
 }
 
-interface OptionsI {
+interface IArrayField {
+    title: string,
+    type: string,
+    items: IItems
+}
+
+interface IItems {
+    title: string,
+    type: string,
+    properties: {nombreTabla:IItemProperties, imagenTabla:IItemProperties}
+}
+
+interface IItemProperties {
+    title: string,
+    description: string,
+    type: string,
+    widget?: {"ui:widget": string}
+}
+
+interface IInitialvalues {
     TRIGGER_TITLE: string,
     TRIGGER_COLOR: string,
-    TRIGGER_WEIGHT: number
+    TRIGGER_WEIGHT: number 
 }
 
-const OPTIONS: OptionsI = {
+const INITIALVALUES: IInitialvalues = {
     TRIGGER_TITLE: "Tabla de Talles",
     TRIGGER_COLOR: "#000",
     TRIGGER_WEIGHT: 400
 }
 
-const ProductSize = (props: TriggerI) => {
+const ProductSize = (props: ITrigger) => {
     //let {product} = useContext(ProductContext);
-    //let { triggerText, triggerColor, triggerWeight } = props;
+    let { /* triggerText, triggerColor, triggerWeight */ arrayField } = props;
     const runtime = useRuntime();
     // producto c/atributo para test prendas superiores: https://practicacomponentes--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
     // producto test boys: https://practicacomponentes--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
@@ -40,6 +60,9 @@ const ProductSize = (props: TriggerI) => {
 
     console.log('Nombre tablita');
     console.log(props);
+
+    console.log('Test:');
+    console.log(arrayField);    
 
     return useMemo(() => {
         return (
@@ -70,7 +93,7 @@ ProductSize.schema = {
         triggerText: {
             title: "Ingresar texto del trigger",
             type: "string",
-            default: OPTIONS.TRIGGER_TITLE
+            default: INITIALVALUES.TRIGGER_TITLE
         },
         triggerColor: {
             title: "Color del texto",
@@ -79,7 +102,7 @@ ProductSize.schema = {
             widget: {
                 "ui:widget": "color"
             },        
-            default: OPTIONS.TRIGGER_COLOR
+            default: INITIALVALUES.TRIGGER_COLOR
         },
         triggerWeight: {
             title: "Ingresar algún valor de las descripción",
@@ -87,9 +110,9 @@ ProductSize.schema = {
             type: "string",
             enum: ["400", "700"],
             enumNames: ["normal", "negrita"],
-            default: OPTIONS.TRIGGER_WEIGHT
+            default: INITIALVALUES.TRIGGER_WEIGHT
         },
-        campoArray: {
+        arrayField: {
             title: "Tablas",
             type: "array", 
             items: {
@@ -116,9 +139,9 @@ ProductSize.schema = {
 }
 
 ProductSize.defaultProps = {
-    triggerText: OPTIONS.TRIGGER_TITLE,
-    triggerColor: OPTIONS.TRIGGER_COLOR,
-    triggerWeight: OPTIONS.TRIGGER_WEIGHT
+    triggerText: INITIALVALUES.TRIGGER_TITLE,
+    triggerColor: INITIALVALUES.TRIGGER_COLOR,
+    triggerWeight: INITIALVALUES.TRIGGER_WEIGHT
 }
 
 export default ProductSize;
