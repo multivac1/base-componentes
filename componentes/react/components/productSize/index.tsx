@@ -1,11 +1,11 @@
-import React, { Fragment, useContext, useMemo } from 'react';
-import { ProductContext } from 'vtex.product-context';
+import React, { /* Fragment, useContext, */ useMemo } from 'react';
+/* import { ProductContext } from 'vtex.product-context';
 import EnhancedModalTrigger from 'vtex.modal-layout/ModalTrigger';
 import ModalRef from 'vtex.modal-layout/Modal';
 import ModalHeader from 'vtex.modal-layout/ModalHeader';
 import MemoizedRichText from 'vtex.rich-text/index';
 import Image from 'vtex.store-image/Image';
-import { useRuntime } from 'vtex.render-runtime';
+import { useRuntime } from 'vtex.render-runtime'; */
 //import styles from './styles.css';
 
 interface ITrigger {
@@ -49,7 +49,7 @@ const INITIALVALUES: IInitialvalues = {
 const ProductSize = (props: ITrigger) => {
     //let {product} = useContext(ProductContext);
     let { /* triggerText, triggerColor, triggerWeight */ arrayField } = props;
-    const runtime = useRuntime();
+    //const runtime = useRuntime();
     // producto c/atributo para test prendas superiores: https://practicacomponentes--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
     // producto test boys: https://practicacomponentes--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
     // prod s/atributo: https://practicacomponentes--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
