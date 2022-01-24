@@ -48,32 +48,18 @@ const INITIALVALUES: IInitialvalues = {
 const ProductSize = (props: ITrigger) => {
     const {product} = useContext(ProductContext);
     const { triggerText, triggerColor, triggerWeight, arrayField } = props;
-    // producto c/atributo para test prendas superiores: https://productsize--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
-    // producto test boys: https://productsize--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
-    // prod s/atributo: https://productsize--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
     const properties = product?.properties;
     const filteredAtribute = properties?.filter((property:any) => property?.name == "Tabla de talles").map((item:any) => (item?.values[0]));
     const tableNameAtribute = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
-    
     const tableNames = arrayField.map((item:any) => item.nombreTabla);
-    const tableImages = arrayField.map((item:any) => item.imagenTabla); // mapear index + url
-
+    const tableImages = arrayField.map((item:any) => item.imagenTabla); 
     const validateTable = tableNames.find((field:any) => field.toLowerCase().replace(/ /g, "") === tableNameAtribute);
     const indexOfNames = tableNames.indexOf(validateTable);
-    
-    
-    console.log('Nombre tablita');
-    console.log(arrayField);
+    const imageUrl = tableImages[indexOfNames];
 
-    // Traer campo Nombre de la tabla y Url imagen
-    // reemplazar la imagen
-    // validar nombre atributo prod con Nombre de la tabla
-
-    console.log('nombres', tableNames);
-    console.log('imgs', tableImages);
-    console.log('validacion', validateTable); 
-    console.log('validar img', indexOfNames);
-     
+    // producto c/atributo para test prendas superiores: https://productsize--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
+    // producto test boys: https://productsize--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
+    // prod s/atributo: https://productsize--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
 
     return useMemo(() => {
         return (
@@ -86,7 +72,7 @@ const ProductSize = (props: ITrigger) => {
                             </div>
                             <ModalRef fullScreen="true">
                                 <ModalHeader iconCloseSize="36" />
-                                <Image src={`https://herenciaar.vteximg.com.br/arquivos/${tableNameAtribute}.jpg`} />
+                                <Image src={imageUrl} />
                             </ModalRef>
                         </EnhancedModalTrigger>   
                     : <Fragment />
