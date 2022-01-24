@@ -1,12 +1,11 @@
-import React, { /* Fragment, useContext, */ useMemo } from 'react';
-/* import { ProductContext } from 'vtex.product-context';
+import React, { Fragment, useContext, useMemo } from 'react';
+import { ProductContext } from 'vtex.product-context';
 import EnhancedModalTrigger from 'vtex.modal-layout/ModalTrigger';
 import ModalRef from 'vtex.modal-layout/Modal';
 import ModalHeader from 'vtex.modal-layout/ModalHeader';
 import MemoizedRichText from 'vtex.rich-text/index';
 import Image from 'vtex.store-image/Image';
-import { useRuntime } from 'vtex.render-runtime'; */
-//import styles from './styles.css';
+import styles from './styles.css';
 
 interface ITrigger {
     triggerText: string,
@@ -47,39 +46,51 @@ const INITIALVALUES: IInitialvalues = {
 }
 
 const ProductSize = (props: ITrigger) => {
-    //let {product} = useContext(ProductContext);
-    let { /* triggerText, triggerColor, triggerWeight */ arrayField } = props;
-    //const runtime = useRuntime();
-    // producto c/atributo para test prendas superiores: https://practicacomponentes--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
-    // producto test boys: https://practicacomponentes--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
-    // prod s/atributo: https://practicacomponentes--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
-    //let properties = product?.properties;
-    //let filteredAtribute = properties?.filter((property:any) => property?.name == "Tabla de talles").map((item:any) => (item?.values[0]));
-    //let tableName = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
-   // let arrayNames = attributeName?.split(',');
+    const {product} = useContext(ProductContext);
+    const { triggerText, triggerColor, triggerWeight, arrayField } = props;
+    // producto c/atributo para test prendas superiores: https://productsize--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
+    // producto test boys: https://productsize--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
+    // prod s/atributo: https://productsize--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
+    const properties = product?.properties;
+    const filteredAtribute = properties?.filter((property:any) => property?.name == "Tabla de talles").map((item:any) => (item?.values[0]));
+    const tableNameAtribute = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
+    
+    const tableNames = arrayField.map((item:any) => item.nombreTabla);
+    const tableImages = arrayField.map((item:any) => item.imagenTabla); // mapear index + url
 
+    const validateTable = tableNames.find((field:any) => field.toLowerCase().replace(/ /g, "") === tableNameAtribute);
+    const indexOfNames = tableNames.indexOf(validateTable);
+    
+    
     console.log('Nombre tablita');
-    console.log(props);
+    console.log(arrayField);
 
-    console.log('Test:');
-    console.log(arrayField);    
+    // Traer campo Nombre de la tabla y Url imagen
+    // reemplazar la imagen
+    // validar nombre atributo prod con Nombre de la tabla
+
+    console.log('nombres', tableNames);
+    console.log('imgs', tableImages);
+    console.log('validacion', validateTable); 
+    console.log('validar img', indexOfNames);
+     
 
     return useMemo(() => {
         return (
             <>
-                
-                   
-                        {/* <EnhancedModalTrigger>
+                {
+                    validateTable ?
+                        <EnhancedModalTrigger>
                             <div className={styles.TriggerTitle} style={{color: triggerColor, fontWeight: triggerWeight}}>
                                 <MemoizedRichText text={triggerText} />
                             </div>
                             <ModalRef fullScreen="true">
                                 <ModalHeader iconCloseSize="36" />
-                                <Image src={`https://${runtime?.account}.vteximg.com.br/arquivos/${tableName}.jpg`} />
+                                <Image src={`https://herenciaar.vteximg.com.br/arquivos/${tableNameAtribute}.jpg`} />
                             </ModalRef>
-                        </EnhancedModalTrigger>   */}
-                    
-                
+                        </EnhancedModalTrigger>   
+                    : <Fragment />
+                }
             </>
         )
     }, [props])
