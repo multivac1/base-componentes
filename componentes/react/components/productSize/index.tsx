@@ -11,6 +11,8 @@ interface ITrigger {
     triggerText: string,
     triggerColor: string,
     triggerWeight: number,
+    iconCloseSize: number,
+    iconCloseColor: string,
     arrayField: IArrayField[]
 }
 
@@ -36,18 +38,22 @@ interface IItemProperties {
 interface IInitialvalues {
     TRIGGER_TITLE: string,
     TRIGGER_COLOR: string,
-    TRIGGER_WEIGHT: number 
+    TRIGGER_WEIGHT: number,
+    ICON_CLOSE_SIZE: number ,
+    ICON_CLOSE_COLOR: string
 }
 
 const INITIALVALUES: IInitialvalues = {
     TRIGGER_TITLE: "Tabla de Talles",
     TRIGGER_COLOR: "#000",
-    TRIGGER_WEIGHT: 400
+    TRIGGER_WEIGHT: 400,
+    ICON_CLOSE_SIZE: 36,
+    ICON_CLOSE_COLOR: "black"
 }
 
 const ProductSize = (props: ITrigger) => {
-    const {product} = useContext(ProductContext);
-    const { triggerText, triggerColor, triggerWeight, arrayField } = props;
+    const { product } = useContext( ProductContext );
+    const { triggerText, triggerColor, triggerWeight, iconCloseSize, iconCloseColor, arrayField } = props;
     const properties = product?.properties;
     const filteredAtribute = properties?.filter((property:any) => property?.name == "Tabla de talles").map((item:any) => (item?.values[0]));
     const tableNameAtribute = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
@@ -55,7 +61,7 @@ const ProductSize = (props: ITrigger) => {
     const tableImages = arrayField.map((item:any) => item.imagenTabla); 
     const validateTable = tableNames.find((field:any) => field.toLowerCase().replace(/ /g, "") === tableNameAtribute);
     const indexOfNames = tableNames.indexOf(validateTable);
-    const imageUrl = tableImages[indexOfNames];
+    const modalImageUrl = tableImages[indexOfNames];
 
     // producto c/atributo para test prendas superiores: https://productsize--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
     // producto test boys: https://productsize--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
@@ -70,9 +76,13 @@ const ProductSize = (props: ITrigger) => {
                             <div className={styles.TriggerTitle} style={{color: triggerColor, fontWeight: triggerWeight}}>
                                 <MemoizedRichText text={triggerText} />
                             </div>
-                            <ModalRef fullScreen="true">
-                                <ModalHeader iconCloseSize="36" />
-                                <Image src={imageUrl} />
+                            <ModalRef>
+                                <div className={styles.ModalContainer}>
+                                    <div className={styles.CloseModalIcon} style={{color: iconCloseColor}}>
+                                        <ModalHeader iconCloseSize={iconCloseSize} />
+                                    </div>
+                                    <Image src={modalImageUrl} width="100%" />
+                                </div>
                             </ModalRef>
                         </EnhancedModalTrigger>   
                     : <Fragment />
@@ -109,6 +119,19 @@ ProductSize.schema = {
             enumNames: ["normal", "negrita"],
             default: INITIALVALUES.TRIGGER_WEIGHT
         },
+        iconCloseSize: {
+            title: "Tamaño icono cerrar modal",
+            description: "se recomienda números entre 28 y 38",
+            type: "number",
+            default: INITIALVALUES.ICON_CLOSE_SIZE
+        },
+        iconCloseColor: {
+            title: "Color ícono cerrar modal",
+            description: "Seleccionar entre negro o blanco",
+            enum: ["black", "white"],
+            enumNames: ["negro","blanco"],
+            default: INITIALVALUES.ICON_CLOSE_COLOR
+        },
         arrayField: {
             title: "Tablas",
             type: "array", 
@@ -138,7 +161,9 @@ ProductSize.schema = {
 ProductSize.defaultProps = {
     triggerText: INITIALVALUES.TRIGGER_TITLE,
     triggerColor: INITIALVALUES.TRIGGER_COLOR,
-    triggerWeight: INITIALVALUES.TRIGGER_WEIGHT
+    triggerWeight: INITIALVALUES.TRIGGER_WEIGHT,
+    iconCloseSize: INITIALVALUES.ICON_CLOSE_SIZE,
+    iconCloseColor: INITIALVALUES.ICON_CLOSE_COLOR
 }
 
 export default ProductSize;

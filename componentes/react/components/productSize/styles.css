@@ -6,3 +6,19 @@
     color: inherit;
     font-weight: inherit;
 }
+
+.modal .container {
+    background: hsla(0,0%,100%,.8);
+}
+
+.modal .paper {
+    top: auto;
+    left: auto;
+    width: 60%;
+    max-height: 70%;
+    padding: .5rem;
+}
+
+.CloseModalIcon .closeButton {
+    color: inherit;
+}
