@@ -5,6 +5,7 @@ import ModalRef from 'vtex.modal-layout/Modal';
 import ModalHeader from 'vtex.modal-layout/ModalHeader';
 import MemoizedRichText from 'vtex.rich-text/index';
 import Image from 'vtex.store-image/Image';
+//import DocumentationButton from '../CustomFields/DocumentationButton/DocumentationButton';
 import styles from './styles.css';
 
 interface ITrigger {
@@ -25,7 +26,7 @@ interface IArrayField {
 interface IItems {
     title: string,
     type: string,
-    properties: {nombreTabla:IItemProperties, imagenTabla:IItemProperties}
+    properties: {tableName:IItemProperties, tableImage:IItemProperties}
 }
 
 interface IItemProperties {
@@ -57,15 +58,15 @@ const ProductSize = (props: ITrigger) => {
     const properties = product?.properties;
     const filteredAtribute = properties?.filter((property:any) => property?.name == "Tabla de talles").map((item:any) => (item?.values[0]));
     const tableNameAtribute = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
-    const tableNames = arrayField.map((item:any) => item.nombreTabla);
-    const tableImages = arrayField.map((item:any) => item.imagenTabla); 
-    const validateTable = tableNames.find((field:any) => field.toLowerCase().replace(/ /g, "") === tableNameAtribute);
-    const indexOfNames = tableNames.indexOf(validateTable);
+    const tableNames = arrayField?.map((item:any) => item?.tableName.toLowerCase().replace(/ /g, ""));
+    const tableImages = arrayField?.map((item:any) => item?.tableImage); 
+    const validateTable = tableNames?.find((field:any) => field === tableNameAtribute);
+    const indexOfNames = tableNames?.indexOf(validateTable);
     const modalImageUrl = tableImages[indexOfNames];
 
     // producto c/atributo para test prendas superiores: https://productsize--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
     // producto test boys: https://productsize--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
-    // prod s/atributo: https://productsize--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258
+    // prod s/atributo: https://productsize--herenciaar.myvtex.com/3866621101az-gorra-herencia-108/p?skuId=41258    
 
     return useMemo(() => {
         return (
@@ -92,11 +93,23 @@ const ProductSize = (props: ITrigger) => {
     }, [props])
 }
 
+/* const DocumentationLink = () => {
+    return (
+        <DocumentationButton link="https://www.youtube.com/watch?v=TrTuBOYRiQI"/>
+    )
+} */
+
 ProductSize.schema = {
-    title: "Product Size - Trigger",
+    title: "Table Size - by attribute",
     description: "Ritch text trigger custom",
     type: "object",
     properties: {
+     /*    documentacion: {
+            type: "string",
+            widget: {
+                "ui:widget": DocumentationLink
+            }
+        }, */
         triggerText: {
             title: "Ingresar texto del trigger",
             type: "string",
@@ -139,12 +152,12 @@ ProductSize.schema = {
                 title: "Tablas",
                 type: "object",
                 properties: {
-                    nombreTabla: {
+                    tableName: {
                         title: "Nombre de la tabla",
                         description: "Poné el nombre",
                         type: "string"
                     },
-                    imagenTabla: {
+                    tableImage: {
                         title: "Url imagen",
                         description: "Poné la imagen",
                         type: "string",
