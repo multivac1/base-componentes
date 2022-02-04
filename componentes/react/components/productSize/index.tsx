@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useMemo } from 'react';
+import React, { Fragment, useContext, useMemo, useCallback } from 'react';
 import { ProductContext } from 'vtex.product-context';
 import EnhancedModalTrigger from 'vtex.modal-layout/ModalTrigger';
 import ModalRef from 'vtex.modal-layout/Modal';
@@ -14,6 +14,7 @@ interface ITrigger {
     triggerWeight: number,
     iconCloseSize: number,
     iconCloseColor: string,
+    dinamicAtribute: string,
     arrayField: IArrayField[]
 }
 
@@ -54,15 +55,26 @@ const INITIALVALUES: IInitialvalues = {
 
 const ProductSize = (props: ITrigger) => {
     const { product } = useContext( ProductContext );
-    const { triggerText, triggerColor, triggerWeight, iconCloseSize, iconCloseColor, arrayField } = props;
+    const { triggerText, triggerColor, triggerWeight, iconCloseSize, iconCloseColor, arrayField, dinamicAtribute } = props;
     const properties = product?.properties;
-    const filteredAtribute = properties?.filter((property:any) => property?.name == "Tabla de talles").map((item:any) => (item?.values[0]));
-    const tableNameAtribute = filteredAtribute?.toString().toLowerCase().replace(/ /g, ""); 
+    const propName = dinamicAtribute === '' ? 'Tabla' : dinamicAtribute;
+    const getPropertyToShow = useCallback((prop:string, propertiesArray: any[]) => {
+        const property = propertiesArray?.find((p:any) => p?.name?.toLowerCase() === prop?.toLowerCase()?.trim());
+        return property;
+    },[]);
+    const prop = useMemo(() =>  propName?.trim()  !== '' && properties?.length ? getPropertyToShow(propName, properties) : {}, [propName, properties]);
+    const tableNameAtribute = prop?.values[0]?.toString().toLowerCase().replace(/ /g, ""); 
     const tableNames = arrayField?.map((item:any) => item?.tableName.toLowerCase().replace(/ /g, ""));
     const tableImages = arrayField?.map((item:any) => item?.tableImage); 
     const validateTable = tableNames?.find((field:any) => field === tableNameAtribute);
     const indexOfNames = tableNames?.indexOf(validateTable);
     const modalImageUrl = tableImages[indexOfNames];
+    
+    
+
+    console.log('prop:', prop);
+    console.log('prop name:', propName);
+    
 
     // producto c/atributo para test prendas superiores: https://productsize--herenciaar.myvtex.com/3837561171hb-remera-hot-ride-307/p
     // producto test boys: https://productsize--herenciaar.myvtex.com/3861161171cr-remera-rat-rod-317/p
@@ -110,6 +122,11 @@ ProductSize.schema = {
                 "ui:widget": DocumentationLink
             }
         }, */
+        dinamicAtribute: {
+            title: 'Nombre del atributo',
+            type: 'string',
+            default: ''
+        },
         triggerText: {
             title: "Ingresar texto del trigger",
             type: "string",
