@@ -7,8 +7,9 @@
     font-weight: inherit;
 }
 
-.modal .container {
+.modal {
     background: hsla(0,0%,100%,.8);
+    z-index: 100000 !important;
 }
 
 .modal .paper {
@@ -21,4 +22,11 @@
 
 .CloseModalIcon .closeButton {
     color: inherit;
+}
+
+@media screen and (max-width: 720px) {
+    .modal .paper {
+        width: 90%;
+        max-height: 80%;
+    }
 }
